@@ -1,0 +1,2 @@
+teste@teste.com;senha123;NomeTeste;2023-12-02
+fulano@email.com;fulano123;Fulano;2023-12-02
