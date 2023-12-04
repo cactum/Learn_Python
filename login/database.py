@@ -1,5 +1,5 @@
 import datetime
-import os
+
 
 class DataBase:
     def __init__(self, filename):
@@ -9,11 +9,11 @@ class DataBase:
         self.load()
 
     def load(self):
-        self.file= open(self.filename, "r")
-        self.users= {}
+        self.file = open(self.filename, "r")
+        self.users = {}
 
         for line in self.file:
-            email, password, name, created= line.strip().split(";")
+            email, password, name, created = line.strip().split(";")
             self.users[email] = (password, name, created)
 
         self.file.close()

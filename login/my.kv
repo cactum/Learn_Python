@@ -6,10 +6,19 @@
     password: passw
 
     FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.5, 0.5, 1, 0.5  # Azul claro semi-transparente
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [15, 15, 15, 15]
+
         cols: 1
 
-        FloatLayout:
+        BoxLayout:
             size: root.width, root.height / 2
+            orientation: "vertical"
 
             Label:
                 text: "Create an Account"
@@ -17,45 +26,54 @@
                 pos_hint: {"x": 0.1, "top": 1}
                 font_size: (root.width**2 + root.height**2) / 14**4
 
-            Label:
-                size_hint: 0.5, 0.12
-                pos_hint: {"x": 0, "top": 0.8}
-                text: "Name: "
-                font_size: (root.width**2 + root.height**2) / 14**4
+            BoxLayout:
+                size_hint: 0.8, None
+                height: "48dp"
+                pos_hint: {"x": 0.1, "top": 0.8}
 
-            TextInput:
-                pos_hint: {"x": 0.5, "top": 0.8}
-                size_hint: 0.4, 0.12
-                id: namee
-                multiline: False
-                font_size: (root.width**2 + root.height**2) / 14**4
+                Label:
+                    text: "Name: "
+                    size_hint: 0.4, 1
+                    font_size: (root.width**2 + root.height**2) / 14**4
 
-            Label:
-                size_hint: 0.5, 0.12
-                pos_hint: {"x": 0, "top": 0.8 - 0.13}
-                text: "Email: "
-                font_size: (root.width**2 + root.height**2) / 14**4
+                TextInput:
+                    size_hint: 0.6, 1
+                    id: namee
+                    multiline: False
+                    font_size: (root.width**2 + root.height**2) / 14**4
 
-            TextInput:
-                pos_hint: {"x": 0.5, "top": 0.8 - 0.13}
-                size_hint: 0.4, 0.12
-                id: email
-                multiline: False
-                font_size: (root.width**2 + root.height**2) / 14**4
+            BoxLayout:
+                size_hint: 0.8, None
+                height: "48dp"
+                pos_hint: {"x": 0.1, "top": 0.67}
 
-            Label:
-                size_hint: 0.5, 0.12
-                pos_hint: {"x": 0, "top": 0.8 - 0.13 * 2}
-                text: "Password: "
-                font_size: (root.width**2 + root.height**2) / 14**4
+                Label:
+                    text: "Email: "
+                    size_hint: 0.4, 1
+                    font_size: (root.width**2 + root.height**2) / 14**4
 
-            TextInput:
-                pos_hint: {"x": 0.5, "top": 0.8 - 0.13 * 2}
-                size_hint: 0.4, 0.12
-                id: passw
-                multiline: False
-                password: True
-                font_size: (root.width**2 + root.height**2) / 14**4
+                TextInput:
+                    size_hint: 0.6, 1
+                    id: email
+                    multiline: False
+                    font_size: (root.width**2 + root.height**2) / 14**4
+
+            BoxLayout:
+                size_hint: 0.8, None
+                height: "48dp"
+                pos_hint: {"x": 0.1, "top": 0.54}
+
+                Label:
+                    text: "Password: "
+                    size_hint: 0.4, 1
+                    font_size: (root.width**2 + root.height**2) / 14**4
+
+                TextInput:
+                    size_hint: 0.6, 1
+                    id: passw
+                    multiline: False
+                    password: True
+                    font_size: (root.width**2 + root.height**2) / 14**4
 
             Button:
                 pos_hint: {"x": 0.3, "y": 0.25}
@@ -67,8 +85,8 @@
                     root.login()
 
             Button:
-                pos_hint: {"x": 0.2, "y": 0.05}
-                size_hint: 0.6, 0.15
+                pos_hint: {"x": 0.3, "y": 0.05}
+                size_hint: 0.4, 0.1
                 text: "Submit"
                 font_size: (root.width**2 + root.height**2) / 14**4
                 on_release:
@@ -82,6 +100,14 @@
     password: password
 
     FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.5, 0.5, 1, 0.5  # Azul claro semi-transparente
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [15, 15, 15, 15]
+
         Label:
             text: "Email: "
             font_size: (root.width**2 + root.height**2) / 13**4
@@ -119,8 +145,8 @@
                 root.loginBtn()
 
         Button:
-            pos_hint: {"x": 0.3, "y": 0.3}
-            size_hint: 0.4, 0.1
+            pos_hint: {"x": 0.2, "y": 0.3}
+            size_hint: 0.6, 0.1
             font_size: (root.width**2 + root.height**2) / 17**4
             text: "Não tem uma conta? Bora criar!"
             on_release:

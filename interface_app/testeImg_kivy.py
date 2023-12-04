@@ -18,7 +18,7 @@ if __name__ == '__main__':
     app.run()
 
 """
-"""
+
 from kivy.app import App
 from kivy.uix.image import Image
 
@@ -33,4 +33,3 @@ class MainApp(App):
 if __name__ == '__main__':
     app = MainApp()
     app.run()
-"""
