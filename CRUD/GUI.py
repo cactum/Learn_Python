@@ -1,5 +1,6 @@
 from tkinter import *
 
+
 class Gui():
     x_pad = 5
     y_pad = 3
@@ -69,6 +70,7 @@ class Gui():
 
     def run(self):
         self.window.mainloop()
+
 
 # Criando a janela principal
 window = Tk()
