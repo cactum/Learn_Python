@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from tkcalendar import Calendar, DateEntry
 
 ####### cores #######
 co0 = "#f0f3f5"  # Preta
@@ -17,7 +17,7 @@ co9 = "#e9edf5"   # sky blue
 # criando janela
 janela = tk.Tk()
 janela.title("PYSQLITE")
-janela.geometry('1043x453')
+janela.geometry('1060x465')
 janela.configure(background=co9)
 janela.resizable(width=False, height=False)
 
@@ -36,12 +36,60 @@ app_nome = tk.Label(frame_cima, text='Formulário de Consultoria', font=('Arial'
 app_nome.place(x=10, y=20)
 
 # Configurando Frame baixo
+
+#Nome
 l_nome = tk.Label(frame_baixo, text='Nome: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_nome.place(x=10, y=10)
-
 e_nome = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
-e_nome.place(x=10, y=40)
+e_nome.place(x=15, y=40)
 
+#CPF
+l_cpf = tk.Label(frame_baixo, text='CPF: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_cpf.place(x=10, y=70)
+e_cpf = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
+e_cpf.place(x=15, y=100)
 
+#Email
+l_email = tk.Label(frame_baixo, text='Email: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_email.place(x=10, y=130)
+e_email = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
+e_email.place(x=15, y=160)
+
+#Telefone
+l_telefone = tk.Label(frame_baixo, text='Telefone: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_telefone.place(x=10, y=190)
+e_telefone = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
+e_telefone.place(x=15, y=220)
+
+#Data consulta
+l_cal = tk.Label(frame_baixo, text='Data da Consulta: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_cal.place(x=15, y=250)
+e_cal = DateEntry(frame_baixo, width=12, background='darkblue', foreground='white', borderwidth=2, year=2023)
+e_cal.place(x=15, y=280)
+
+#Estado consulta
+l_estado = tk.Label(frame_baixo, text='Estado da Consulta: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_estado.place(x=150, y=250)
+e_estado = tk.Entry(frame_baixo, width=20, justify='left', relief='solid')
+e_estado.place(x=150, y=280)
+
+"""
+#Observações (VERSAO ALTERNATIVA CAIXA)
+l_obs = tk.Label(frame_baixo, text='Observações: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_obs.place(x=15, y=310)
+e_obs = tk.Text(frame_baixo, width=32, height=3, relief='solid')
+e_obs.place(x=15, y=340)
+"""
+
+#Observações
+l_obs = tk.Label(frame_baixo, text='Observações: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
+l_obs.place(x=15, y=310)
+e_obs = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
+e_obs.place(x=15, y=340)
+
+# Botão inserir
+b_inserir = tk.Button(frame_baixo, text='Inserir', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6, fg=co1,
+                      relief='raised', overrelief='ridge')
+b_inserir.place(x=15, y=370)
 
 janela.mainloop()
