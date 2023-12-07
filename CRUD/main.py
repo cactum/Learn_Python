@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
 
 ####### cores #######
@@ -6,18 +7,17 @@ co0 = "#f0f3f5"  # Preta
 co1 = "#feffff"  # branca
 co2 = "#4fa882"  # verde
 co3 = "#38576b"  # valor
-co4 = "#403d3d"   # letra
-co5 = "#e06636"   # profit
-co6 = "#038cfc"   # azul
-co7 = "#ef5350"   # vermelha
-co8 = "#263238"   # verde
-co9 = "#e9edf5"   # sky blue
-
+co4 = "#403d3d"  # letra
+co5 = "#e06636"  # profit
+co6 = "#038cfc"  # azul
+co7 = "#ef5350"  # vermelha
+co8 = "#263238"  # verde
+co9 = "#e9edf5"  # sky blue
 
 # criando janela
 janela = tk.Tk()
 janela.title("PYSQLITE")
-janela.geometry('1060x465')
+janela.geometry('1090x465')
 janela.configure(background=co9)
 janela.resizable(width=False, height=False)
 
@@ -37,37 +37,37 @@ app_nome.place(x=10, y=20)
 
 # Configurando Frame baixo
 
-#Nome
+# Nome
 l_nome = tk.Label(frame_baixo, text='Nome: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_nome.place(x=10, y=10)
 e_nome = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
 e_nome.place(x=15, y=40)
 
-#CPF
+# CPF
 l_cpf = tk.Label(frame_baixo, text='CPF: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_cpf.place(x=10, y=70)
 e_cpf = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
 e_cpf.place(x=15, y=100)
 
-#Email
+# Email
 l_email = tk.Label(frame_baixo, text='Email: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_email.place(x=10, y=130)
 e_email = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
 e_email.place(x=15, y=160)
 
-#Telefone
+# Telefone
 l_telefone = tk.Label(frame_baixo, text='Telefone: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_telefone.place(x=10, y=190)
 e_telefone = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
 e_telefone.place(x=15, y=220)
 
-#Data consulta
+# Data consulta
 l_cal = tk.Label(frame_baixo, text='Data da Consulta: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_cal.place(x=15, y=250)
 e_cal = DateEntry(frame_baixo, width=12, background='darkblue', foreground='white', borderwidth=2, year=2023)
 e_cal.place(x=15, y=280)
 
-#Estado consulta
+# Estado consulta
 l_estado = tk.Label(frame_baixo, text='Estado da Consulta: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_estado.place(x=150, y=250)
 e_estado = tk.Entry(frame_baixo, width=20, justify='left', relief='solid')
@@ -81,7 +81,7 @@ e_obs = tk.Text(frame_baixo, width=32, height=3, relief='solid')
 e_obs.place(x=15, y=340)
 """
 
-#Observações
+# Observações
 l_obs = tk.Label(frame_baixo, text='Observações: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_obs.place(x=15, y=310)
 e_obs = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
@@ -91,5 +91,51 @@ e_obs.place(x=15, y=340)
 b_inserir = tk.Button(frame_baixo, text='Inserir', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6, fg=co1,
                       relief='raised', overrelief='ridge')
 b_inserir.place(x=15, y=370)
+
+# Botão Atualizar
+b_atualizar = tk.Button(frame_baixo, text='Atualizar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6,
+                        fg=co1,
+                        relief='raised', overrelief='ridge')
+b_atualizar.place(x=105, y=370)
+
+# Botão Deletar
+b_deletar = tk.Button(frame_baixo, text='Deletar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co7, fg=co1,
+                      relief='raised', overrelief='ridge')
+b_deletar.place(x=195, y=370)
+
+# Frame direita
+lista = [['']]
+
+tabela_head = ['Id', 'Nome', 'CPF', 'Email', 'Telefone', 'Data', 'Estado', 'Observação']
+
+df_list = lista
+
+tree = ttk.Treeview(frame_direita, selectmode="extended", columns=tabela_head, show="headings")
+vsb = ttk.Scrollbar(frame_direita, orient="vertical", command=tree.yview)
+hsb = ttk.Scrollbar(frame_direita, orient="horizontal", command=tree.xview)
+
+tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+tree.grid(column=0, row=0, sticky='nsew')
+vsb.grid(column=1, row=0, sticky='ns')
+hsb.grid(column=0, row=1, sticky='ew')
+
+frame_direita.grid_rowconfigure(0, weight=12)
+frame_direita.grid_columnconfigure(0, weight=12)
+
+
+hd = ["nw", "nw", "nw", "nw", "nw", "center", "center", "center"]
+h = [30, 120, 120, 150, 120, 60, 70, 100]
+n = 0
+
+# Configuração da tabela
+for col in tabela_head:
+    tree.heading(col, text=col.title(), anchor=tk.CENTER)
+    tree.column(col, width=h[n], anchor=hd[n])
+    n += 1
+
+for item in df_list:
+    tree.insert('', 'end', values=item)
+
 
 janela.mainloop()
