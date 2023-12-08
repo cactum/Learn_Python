@@ -33,10 +33,10 @@ def atualizar_info(i):
         query = "UPDATE formulario SET nome=?, cpf=?, email=?, telefone=?, dia_em=?, estado=?, assunto=? WHERE id =?"
         cur.execute(query, i)
 
-'''
+
 # Deletar informações
-with (conn):
-    cur = conn.cursor()
-    query = "DELETE FROM formulario WHERE id =?"
-    cur.execute(query, lista)
-'''
+def deletar_info(i):
+    with (conn):
+        cur = conn.cursor()
+        query = "DELETE FROM formulario WHERE id =?"
+        cur.execute(query, i)

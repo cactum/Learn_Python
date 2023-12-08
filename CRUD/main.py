@@ -79,7 +79,7 @@ def atualizar():
         treev_dicionario = tree.item(treev_dados)
         tree_lista = treev_dicionario['values']
 
-        valor = tree_lista[0]
+        valor_id = tree_lista[0]
 
         e_nome.delete(0, 'end')
         e_cpf.delete(0, 'end')
@@ -109,7 +109,7 @@ def atualizar():
         estado = e_estado.get()
         assunto = e_obs.get()
 
-        lista = [nome, cpf, email, telefone, dia, estado, assunto]
+        lista = [nome, cpf, email, telefone, dia, estado, assunto, valor_id]
 
         if nome == '':
             messagebox.showerror('Erro', 'O nome não pode ser vazio')
@@ -128,13 +128,33 @@ def atualizar():
         for widget in frame_direita.winfo_children():
             widget.destroy()
 
+        exibir()
+
     b_confirmar = tk.Button(frame_baixo, command=update, text='Confirmar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'),
                                 bg=co2,
                                 fg=co1,
                                 relief='raised', overrelief='ridge')
     b_confirmar.place(x=105, y=400)
 
-    exibir()
+#função deletar
+def deletar():
+    try:
+        treev_dados = tree.focus()
+        treev_dicionario = tree.item(treev_dados)
+        tree_lista = treev_dicionario['values']
+
+        valor_id = [tree_lista[0]]
+
+        deletar_info(valor_id)
+        messagebox.showinfo('Sucesso', 'Os dados foram deletados')
+
+        for widget in frame_direita.winfo_children():
+            widget.destroy()
+
+        exibir()
+
+    except IndexError:
+        messagebox.showerror('Erro', 'Selecione um dos dados na tabela')
 
 
 
@@ -194,7 +214,7 @@ b_atualizar = tk.Button(frame_baixo, command=atualizar, text='Atualizar', width=
 b_atualizar.place(x=105, y=370)
 
 # Botão Deletar
-b_deletar = tk.Button(frame_baixo, text='Deletar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co7, fg=co1,
+b_deletar = tk.Button(frame_baixo, command=deletar, text='Deletar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co7, fg=co1,
                       relief='raised', overrelief='ridge')
 b_deletar.place(x=195, y=370)
 
