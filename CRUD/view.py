@@ -25,13 +25,15 @@ def exibir_info():
             lista.append(i)
     return lista
 
-'''
-# Atualizar informações
-with conn:
-    cur = conn.cursor()
-    query = "UPDATE formulario SET nome=? WHERE id =?"
-    cur.execute(query, lista)
 
+# Atualizar informações
+def atualizar_info(i):
+    with conn:
+        cur = conn.cursor()
+        query = "UPDATE formulario SET nome=?, cpf=?, email=?, telefone=?, dia_em=?, estado=?, assunto=? WHERE id =?"
+        cur.execute(query, i)
+
+'''
 # Deletar informações
 with (conn):
     cur = conn.cursor()

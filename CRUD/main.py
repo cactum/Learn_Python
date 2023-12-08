@@ -19,7 +19,7 @@ co9 = "#e9edf5"  # sky blue
 # criando janela
 janela = tk.Tk()
 janela.title("PYSQLITE")
-janela.geometry('1090x465')
+janela.geometry('1090x485')
 janela.configure(background=co9)
 janela.resizable(width=False, height=False)
 
@@ -27,7 +27,7 @@ janela.resizable(width=False, height=False)
 frame_cima = tk.Frame(janela, width=310, height=50, bg=co2, relief='flat')
 frame_cima.grid(row=0, column=0)
 
-frame_baixo = tk.Frame(janela, width=310, height=403, bg=co1, relief='flat')
+frame_baixo = tk.Frame(janela, width=310, height=450, bg=co1, relief='flat')
 frame_baixo.grid(row=1, column=0, sticky=tk.NSEW, padx=0, pady=1)
 
 frame_direita = tk.Frame(janela, width=588, height=403, bg=co1, relief='flat')
@@ -36,7 +36,10 @@ frame_direita.grid(row=0, column=1, rowspan=2, padx=1, pady=0, sticky=tk.NSEW)
 # Label no frame_cima (alterado para um Label)
 app_nome = tk.Label(frame_cima, text='Formulário de Consultoria', font=('Arial', 10, 'bold'), bg=co2, fg=co1)
 app_nome.place(x=10, y=20)
-'''
+
+#variavel tree global
+global tree
+
 # função inserir
 def inserir():
     nome = e_nome.get()
@@ -49,11 +52,11 @@ def inserir():
 
     lista = [nome, cpf, email, telefone, dia, estado, assunto]
 
-    if nome =='':
-        messagebox.showerror('Erro','O nome não pode ser vazio')
+    if nome == '':
+        messagebox.showerror('Erro', 'O nome não pode ser vazio')
     else:
         inserir_info(lista)
-        messagebox.showinfo('Dados inseridos com sucesso')
+        messagebox.showinfo('Sucesso', 'dados inseridos')
 
         e_nome.delete(0, 'end')
         e_cpf.delete(0, 'end')
@@ -68,7 +71,72 @@ def inserir():
 
     exibir()
 
-'''
+
+# função atualizar
+def atualizar():
+    try:
+        treev_dados = tree.focus()
+        treev_dicionario = tree.item(treev_dados)
+        tree_lista = treev_dicionario['values']
+
+        valor = tree_lista[0]
+
+        e_nome.delete(0, 'end')
+        e_cpf.delete(0, 'end')
+        e_email.delete(0, 'end')
+        e_telefone.delete(0, 'end')
+        e_cal.delete(0, 'end')
+        e_estado.delete(0, 'end')
+        e_obs.delete(0, 'end')
+
+        e_nome.insert(0,tree_lista[1])
+        e_cpf.insert(0,tree_lista[2])
+        e_email.insert(0,tree_lista[3])
+        e_telefone.insert(0,tree_lista[4])
+        e_cal.insert(0,tree_lista[5])
+        e_estado.insert(0,tree_lista[6])
+        e_obs.insert(0,tree_lista[7])
+
+    except IndexError:
+        messagebox.showerror('Erro', 'Selecione um dos dados na tabela')
+
+    def update():
+        nome = e_nome.get()
+        cpf = e_cpf.get()
+        email = e_email.get()
+        telefone = e_telefone.get()
+        dia = e_cal.get()
+        estado = e_estado.get()
+        assunto = e_obs.get()
+
+        lista = [nome, cpf, email, telefone, dia, estado, assunto]
+
+        if nome == '':
+            messagebox.showerror('Erro', 'O nome não pode ser vazio')
+        else:
+            atualizar_info(lista)
+            messagebox.showinfo('Sucesso', 'dados atualizados')
+
+            e_nome.delete(0, 'end')
+            e_cpf.delete(0, 'end')
+            e_email.delete(0, 'end')
+            e_telefone.delete(0, 'end')
+            e_cal.delete(0, 'end')
+            e_estado.delete(0, 'end')
+            e_obs.delete(0, 'end')
+
+        for widget in frame_direita.winfo_children():
+            widget.destroy()
+
+    b_confirmar = tk.Button(frame_baixo, command=update, text='Confirmar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'),
+                                bg=co2,
+                                fg=co1,
+                                relief='raised', overrelief='ridge')
+    b_confirmar.place(x=105, y=400)
+
+    exibir()
+
+
 
 # Configurando Frame baixo
 
@@ -115,12 +183,12 @@ e_obs = tk.Entry(frame_baixo, width=45, justify='left', relief='solid')
 e_obs.place(x=15, y=340)
 
 # Botão inserir
-b_inserir = tk.Button(frame_baixo, text='Inserir', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6, fg=co1,
+b_inserir = tk.Button(frame_baixo, command=inserir, text='Inserir', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6, fg=co1,
                       relief='raised', overrelief='ridge')
 b_inserir.place(x=15, y=370)
 
 # Botão Atualizar
-b_atualizar = tk.Button(frame_baixo, text='Atualizar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6,
+b_atualizar = tk.Button(frame_baixo, command=atualizar, text='Atualizar', width=10, anchor=tk.NW, font=('Arial', 9, 'bold'), bg=co6,
                         fg=co1,
                         relief='raised', overrelief='ridge')
 b_atualizar.place(x=105, y=370)
@@ -130,9 +198,13 @@ b_deletar = tk.Button(frame_baixo, text='Deletar', width=10, anchor=tk.NW, font=
                       relief='raised', overrelief='ridge')
 b_deletar.place(x=195, y=370)
 
+
 # Frame direita
 
 def exibir():
+
+    global tree
+
     lista = exibir_info()
 
     tabela_head = ['Id', 'Nome', 'CPF', 'Email', 'Telefone', 'Data', 'Estado', 'Observação']
@@ -167,7 +239,7 @@ def exibir():
         tree.insert('', 'end', values=item)
 
 
-#chamando a funcao exibir
+# chamando a funcao exibir
 exibir()
 
 janela.mainloop()
