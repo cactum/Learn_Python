@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from tkcalendar import Calendar, DateEntry
+from view import *
 
 ####### cores #######
 co0 = "#f0f3f5"  # Preta
@@ -34,6 +36,39 @@ frame_direita.grid(row=0, column=1, rowspan=2, padx=1, pady=0, sticky=tk.NSEW)
 # Label no frame_cima (alterado para um Label)
 app_nome = tk.Label(frame_cima, text='Formulário de Consultoria', font=('Arial', 10, 'bold'), bg=co2, fg=co1)
 app_nome.place(x=10, y=20)
+'''
+# função inserir
+def inserir():
+    nome = e_nome.get()
+    cpf = e_cpf.get()
+    email = e_email.get()
+    telefone = e_telefone.get()
+    dia = e_cal.get()
+    estado = e_estado.get()
+    assunto = e_obs.get()
+
+    lista = [nome, cpf, email, telefone, dia, estado, assunto]
+
+    if nome =='':
+        messagebox.showerror('Erro','O nome não pode ser vazio')
+    else:
+        inserir_info(lista)
+        messagebox.showinfo('Dados inseridos com sucesso')
+
+        e_nome.delete(0, 'end')
+        e_cpf.delete(0, 'end')
+        e_email.delete(0, 'end')
+        e_telefone.delete(0, 'end')
+        e_cal.delete(0, 'end')
+        e_estado.delete(0, 'end')
+        e_obs.delete(0, 'end')
+
+    for widget in frame_direita.winfo_children():
+        widget.destroy()
+
+    exibir()
+
+'''
 
 # Configurando Frame baixo
 
@@ -73,14 +108,6 @@ l_estado.place(x=150, y=250)
 e_estado = tk.Entry(frame_baixo, width=20, justify='left', relief='solid')
 e_estado.place(x=150, y=280)
 
-"""
-#Observações (VERSAO ALTERNATIVA CAIXA)
-l_obs = tk.Label(frame_baixo, text='Observações: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
-l_obs.place(x=15, y=310)
-e_obs = tk.Text(frame_baixo, width=32, height=3, relief='solid')
-e_obs.place(x=15, y=340)
-"""
-
 # Observações
 l_obs = tk.Label(frame_baixo, text='Observações: ', font=('Arial', 10, 'bold'), bg=co1, fg=co4)
 l_obs.place(x=15, y=310)
@@ -104,38 +131,43 @@ b_deletar = tk.Button(frame_baixo, text='Deletar', width=10, anchor=tk.NW, font=
 b_deletar.place(x=195, y=370)
 
 # Frame direita
-lista = [['']]
 
-tabela_head = ['Id', 'Nome', 'CPF', 'Email', 'Telefone', 'Data', 'Estado', 'Observação']
+def exibir():
+    lista = exibir_info()
 
-df_list = lista
+    tabela_head = ['Id', 'Nome', 'CPF', 'Email', 'Telefone', 'Data', 'Estado', 'Observação']
 
-tree = ttk.Treeview(frame_direita, selectmode="extended", columns=tabela_head, show="headings")
-vsb = ttk.Scrollbar(frame_direita, orient="vertical", command=tree.yview)
-hsb = ttk.Scrollbar(frame_direita, orient="horizontal", command=tree.xview)
+    df_list = lista
 
-tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+    tree = ttk.Treeview(frame_direita, selectmode="extended", columns=tabela_head, show="headings")
+    vsb = ttk.Scrollbar(frame_direita, orient="vertical", command=tree.yview)
+    hsb = ttk.Scrollbar(frame_direita, orient="horizontal", command=tree.xview)
 
-tree.grid(column=0, row=0, sticky='nsew')
-vsb.grid(column=1, row=0, sticky='ns')
-hsb.grid(column=0, row=1, sticky='ew')
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
-frame_direita.grid_rowconfigure(0, weight=12)
-frame_direita.grid_columnconfigure(0, weight=12)
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+
+    frame_direita.grid_rowconfigure(0, weight=12)
+    frame_direita.grid_columnconfigure(0, weight=12)
+
+    # Ajuste dos elementos para a exibição correta na Treeview
+    hd = ["nw", "nw", "nw", "nw", "nw", "center", "center", "center"]
+    h = [30, 120, 120, 150, 120, 60, 70, 100]
+    n = 0
+
+    # Configuração da tabela
+    for col in tabela_head:
+        tree.heading(col, text=col.title(), anchor=tk.CENTER)
+        tree.column(col, width=h[n], anchor=hd[n])
+        n += 1
+
+    for item in df_list:
+        tree.insert('', 'end', values=item)
 
 
-hd = ["nw", "nw", "nw", "nw", "nw", "center", "center", "center"]
-h = [30, 120, 120, 150, 120, 60, 70, 100]
-n = 0
-
-# Configuração da tabela
-for col in tabela_head:
-    tree.heading(col, text=col.title(), anchor=tk.CENTER)
-    tree.column(col, width=h[n], anchor=hd[n])
-    n += 1
-
-for item in df_list:
-    tree.insert('', 'end', values=item)
-
+#chamando a funcao exibir
+exibir()
 
 janela.mainloop()
